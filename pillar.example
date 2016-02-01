@@ -1,0 +1,4 @@
+# ``oracle-jdk`` formula configuration:
+jdk:
+    # Add the JDK version here. Defaulted to 8
+    version: 8
