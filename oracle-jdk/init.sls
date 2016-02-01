@@ -1,5 +1,9 @@
-# Install Oracle Java JDK.
+{% from "oracle-jdk/map.jinja" import jdk_settings with context %}
 
+# Set JDK package
+{% set version = jdk_settings.versions_map[jdk_settings.version] -%}
+
+# Install Oracle Java JDK.
 install-python-software-properties:
   pkg.installed:
     - name: python-software-properties
@@ -15,7 +19,7 @@ oracle-license-select:
     - require_in:
       - pkg: install-java-jdk
       - cmd: oracle-license-seen-lie
- 
+
 oracle-license-seen-lie:
   cmd.run:
     - unless: which java
@@ -25,11 +29,12 @@ oracle-license-seen-lie:
 
 install-java-jdk:
   pkg.installed:
-    - name: oracle-java8-installer
+    # - name: oracle-java8-installer
+    - name: {{ version.pkg }}
     - require:
       - pkgrepo: oracle-java-ppa
 
 JAVA_HOME:
   file.append:
     - name: /etc/profile.d/myglobalenvexports.sh
-    - text: export JAVA_HOME=/usr/lib/jvm/java-8-oracle
+    - text: export JAVA_HOME={{ version.install_dir }}
