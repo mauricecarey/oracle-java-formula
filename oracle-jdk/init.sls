@@ -29,7 +29,6 @@ oracle-license-seen-lie:
 
 install-java-jdk:
   pkg.installed:
-    # - name: oracle-java8-installer
     - name: {{ version.pkg }}
     - require:
       - pkgrepo: oracle-java-ppa
